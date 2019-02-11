@@ -11,7 +11,7 @@ class Scraper
   end
 
   def get_names
-    item_container.css(".product-name").css("p").children.map { |name| name.text }.compact
+    item_container.css(".product-display-name").css("p").children.map { |name| name.text }.compact
   end
 
   def get_prices
@@ -30,6 +30,11 @@ class Scraper
 
   scraper = Scraper.new
   names = scraper.get_names
-  pricess = scraper.get_prices
+  prices = scraper.get_prices
+
+  (0...prices.size).each do |index|
+    puts " - - - Index #{index + 1} - - -"
+    puts "Name: #{names[index]} | Price: #{prices[index]}"
+  end
 
 end

@@ -1,5 +1,6 @@
 require 'HTTParty'
 require 'Nokogiri'
+require "to_xml"
 
 class Scraper
 
@@ -7,7 +8,7 @@ class Scraper
 
   def initialize
     doc = HTTParty.get("https://store.nike.com/gb/en_gb/pw/mens-nikeid-lifestyle-shoes/1k9Z7puZoneZoi3?ref=https%253A%252F%252Fwww.google.com%252F")
-    @parse_page ||= Nokogiri::HTML(doc)
+    @parse_page ||= Nokogiri::XML(doc)
   end
 
   def get_names
@@ -32,9 +33,16 @@ class Scraper
   names = scraper.get_names
   prices = scraper.get_prices
 
-  (0...prices.size).each do |index|
-    puts " - - - Index #{index + 1} - - -"
-    puts "Name: #{names[index]} | Price: #{prices[index]}"
+  File.open("items.xml", "w+") do |f|
+    (0...prices.size).each do |index|
+      hash = {:names => names[index], :prices => prices[index]}
+      f.puts(hash.to_xml(:root => 'Shoe'))
+    end
   end
+
+  # (0...prices.size).each do |index|
+  #   puts " - - - Index #{index + 1} - - -"
+  #   puts "Name: #{names[index]} | Price: #{prices[index]}"
+  # end
 
 end

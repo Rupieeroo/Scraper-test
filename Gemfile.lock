@@ -25,6 +25,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
+    to_xml (0.1.1)
 
 PLATFORMS
   ruby
@@ -33,6 +34,7 @@ DEPENDENCIES
   httparty
   nokogiri
   rspec
+  to_xml (~> 0.1.1)
 
 BUNDLED WITH
    1.17.1
